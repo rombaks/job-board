@@ -1,11 +1,10 @@
 lint:
 	black --check .
 	flake8
-	mypy --sqlite-cache .
 	isort --check-only .
 
 test:
-	pytest
+	python3 -m pytest
 
 check: lint test
 

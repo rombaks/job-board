@@ -73,6 +73,8 @@ psycopg2-binary = "^2.9.5"
 sqlalchemy = "^1.4.46"
 python-dotenv = "^0.21.0"
 passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+pytest = "^7.2.1"
+httpx = "^0.23.3"
 
 [tool.black]
 line-length = 80
