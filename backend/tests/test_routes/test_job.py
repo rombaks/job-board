@@ -48,6 +48,7 @@ def test_read_all_jobs(client):
 
 
 def test_update_a_job(client):
+    NEW_TITLE = "test new title"
     data = {
         "title": "New Job super",
         "company": "doogle",
@@ -56,7 +57,12 @@ def test_update_a_job(client):
         "description": "fastapi",
         "date_posted": "2022-03-20",
     }
+
     client.post("/jobs/create-job/", json=data)
-    data["title"] = "test new title"
+    data["title"] = NEW_TITLE
+
     response = client.put("/jobs/update/1", json=data)
+    expected_title = client.get("/jobs/get/1/").json()["title"]
+
     assert response.json()["msg"] == "Successfully updated data."
+    assert expected_title == NEW_TITLE
