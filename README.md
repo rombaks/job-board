@@ -1,2 +1,2 @@
-# job_board
+# Job board
 Job board written with FastAPI
