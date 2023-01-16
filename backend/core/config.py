@@ -22,5 +22,9 @@ class Settings:
         f"postgresql://{PG_USER}:{PG_PASSWORD}@{PG_SERVER}:{PG_PORT}/{PG_DB}"
     )
 
+    SECRET_KEY: str = os.getenv("SECRET_KEY")
+    ALGORITHM = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES = 30
+
 
 settings = Settings()
