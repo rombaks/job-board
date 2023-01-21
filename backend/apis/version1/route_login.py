@@ -1,10 +1,11 @@
 from datetime import timedelta
 
-from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi import APIRouter, Depends, HTTPException, Response, status
+from fastapi.security import OAuth2PasswordRequestForm
 from jose import JWTError, jwt
 from sqlalchemy.orm import Session
 
+from apis.utils import OAuth2PasswordBearerWithCookie
 from core.config import settings
 from core.hashing import Hasher
 from core.security import create_access_token
@@ -15,7 +16,7 @@ from schemas.tokens import Token
 
 router = APIRouter()
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login/token")
+oauth2_scheme = OAuth2PasswordBearerWithCookie(tokenUrl="/login/token")
 
 
 def authenticate_user(username: str, password: str, db: Session):
@@ -30,6 +31,7 @@ def authenticate_user(username: str, password: str, db: Session):
 
 @router.post("/token", response_model=Token)
 def login_for_access_token(
+    response: Response,
     form_data: OAuth2PasswordRequestForm = Depends(),
     db: Session = Depends(get_db),
 ):
@@ -44,6 +46,9 @@ def login_for_access_token(
     )
     access_token = create_access_token(
         data={"sub": user.email}, expires_delta=access_token_expires
+    )
+    response.set_cookie(
+        key="access_token", value=f"Bearer {access_token}", httponly=True
     )
     return {"access_token": access_token, "token_type": "bearer"}
 
