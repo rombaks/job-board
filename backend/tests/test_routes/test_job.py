@@ -81,7 +81,7 @@ def test_update_a_job(client, normal_user_token_headers):
     assert expected_title == NEW_TITLE
 
 
-def test_delete_job_unauthorized(client, normal_user_token_headers):
+def test_delete_a_job(client, normal_user_token_headers):
     data = {
         "title": "New Job super",
         "company": "doogle",
@@ -90,10 +90,9 @@ def test_delete_job_unauthorized(client, normal_user_token_headers):
         "description": "fastapi",
         "date_posted": "2022-03-20",
     }
-
     client.post(
-        "jobs/create-job/", json=data, headers=normal_user_token_headers
+        "/jobs/create-job/", json=data, headers=normal_user_token_headers
     )
-    delete_response = client.delete("/jobs/delete/1")
-
-    assert delete_response.status_code == status.HTTP_401_UNAUTHORIZED
+    client.delete("/jobs/delete/1", headers=normal_user_token_headers)
+    response = client.get("/jobs/get/1/")
+    assert response.status_code == status.HTTP_404_NOT_FOUND
