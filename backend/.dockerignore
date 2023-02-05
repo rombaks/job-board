@@ -1,0 +1,11 @@
+__pycache__
+*.pyc
+.mypy_cache
+.pytest_cache
+.env
+env/
+db.sqlite3
+docs/
+*.log
+.coverage
+.coverage.*
