@@ -13,7 +13,7 @@ x-db-config: &db-config
 
 services:
   api:
-    image: ./backend/job_board_api
+    image: job_board_api
     build:
       context: .
     environment:
@@ -21,7 +21,7 @@ services:
     depends_on:
       - db
     ports:
-      - "8000:8000"
+      - "8008:8000"
     stdin_open: true
     tty: true
 
