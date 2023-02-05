@@ -13,7 +13,7 @@ x-db-config: &db-config
 
 services:
   api:
-    image: job_board_api
+    image: ./backend/backend_api
     build:
       context: .
     environment:
