@@ -1,4 +1,4 @@
-version: "3.7"
+version: "3.8"
 
 x-app-config: &app-config
   SECRET_KEY: secret_key
@@ -13,15 +13,20 @@ x-db-config: &db-config
 
 services:
   api:
-    image: ./backend/backend_api
+    image: job_board_api
     build:
       context: .
     environment:
       <<: *app-config
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_SERVER: db
+      POSTGRES_PORT: 5432
     depends_on:
       - db
     ports:
-      - "8008:8000"
+      - 8008:8000
     stdin_open: true
     tty: true
 
@@ -31,7 +36,7 @@ services:
     logging:
       driver: none
     ports:
-      - "5432:5432"
+      - 5433:5432
 
 volumes:
   sqlvolume:
