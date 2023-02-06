@@ -41,4 +41,6 @@ RUN poetry install  --no-interaction --no-ansi --no-root
 
 ADD . /app
 
-CMD uvicorn main:app --reload
+EXPOSE 8000
+
+CMD uvicorn main:app --reload --host 0.0.0.0

@@ -1,0 +1,42 @@
+version: "3.8"
+
+x-app-config: &app-config
+  SECRET_KEY: secret_key
+  COVERALLS_REPO_TOKEN: ${COVERALLS_REPO_TOKEN}
+
+x-db-config: &db-config
+  POSTGRES_DB: postgres
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: postgres
+  POSTGRES_SERVER: db
+  POSTGRES_PORT: 5432
+
+services:
+  api:
+    image: job_board_api
+    build:
+      context: .
+    environment:
+      <<: *app-config
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_SERVER: db
+      POSTGRES_PORT: 5432
+    depends_on:
+      - db
+    ports:
+      - 8008:8000
+    stdin_open: true
+    tty: true
+
+  db:
+    image: postgres:12.5-alpine
+    environment: *db-config
+    logging:
+      driver: none
+    ports:
+      - 5433:5432
+
+volumes:
+  sqlvolume:
