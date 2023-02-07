@@ -18,7 +18,7 @@ Project helps you to open job opportunity! It provides:
 -   Clone the repo.
 
 ```
-git clone git@github.com:rombaks/job_board.git
+git clone git@github.com:rombaks/job-board.git
 ```
 
 -   Go to `backend` directory.
